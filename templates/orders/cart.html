@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Корзина — Моё Кафе{% endblock %}
+{% block content %}
+<section class="page-heading"><div class="container"><span class="eyebrow">Почти готово</span><h1>Ваша корзина</h1><p>Проверьте заказ и переходите к оформлению.</p></div></section>
+<section class="section cart-section"><div class="container cart-layout">
+ <div class="cart-items">
+ {% for item in cart.items %}
+  <article class="cart-item">
+   <div class="cart-item-photo" {% if item.product.image %}style="background-image:url('{{ item.product.image.url }}')"{% elif item.product.image_url %}style="background-image:url('{{ item.product.image_url }}')"{% endif %}></div>
+   <div class="cart-item-main"><a href="{% url 'product_detail' item.product.slug %}">{{ item.product.name }}</a><small>{{ item.product.price }} сомони за порцию</small></div>
+   <div class="quantity-control"><form method="post" action="{% url 'cart_update' item.product.pk %}">{% csrf_token %}<button name="quantity" value="{{ item.quantity|add:'-1' }}" aria-label="Уменьшить количество">−</button></form><span>{{ item.quantity }}</span><form method="post" action="{% url 'cart_update' item.product.pk %}">{% csrf_token %}<button name="quantity" value="{{ item.quantity|add:'1' }}" aria-label="Увеличить количество">+</button></form></div>
+   <strong class="cart-line-price">{{ item.line_total }} <small>сомони</small></strong>
+   <form method="post" action="{% url 'cart_update' item.product.pk %}">{% csrf_token %}<button class="remove-button" name="action" value="remove" aria-label="Убрать блюдо">×</button></form>
+  </article>
+ {% empty %}
+  <div class="empty-state cart-empty"><span>🧺</span><h2>Корзина пока пуста</h2><p>Самое время найти что-нибудь вкусное.</p><a class="button button-orange" href="{% url 'menu' %}">Открыть меню <span>↗</span></a></div>
+ {% endfor %}
+ </div>
+ {% if cart.items %}
+ <aside class="cart-summary"><h2>Ваш заказ</h2><div><span>Блюда</span><b>{{ cart.subtotal }} сомони</b></div><div><span>Доставка</span><b>{% if cart.delivery_fee == 0 %}Бесплатно{% else %}{{ cart.delivery_fee }} сомони{% endif %}</b></div>
+  {% if cart.subtotal < 150 %}<p class="delivery-hint">Доставка бесплатная при заказе от 150 сомони.</p>{% else %}<p class="delivery-hint">Для вас доставка бесплатная ✦</p>{% endif %}
+  <hr><div class="summary-total"><span>Итого с доставкой</span><b>{{ cart.total }} сомони</b></div><a class="button button-orange full-width" href="{% url 'checkout' %}">Оформить заказ <span>↗</span></a><small class="cash-note">Оплата наличными при получении</small>
+ </aside>
+ {% endif %}
+</div></section>
+{% endblock %}

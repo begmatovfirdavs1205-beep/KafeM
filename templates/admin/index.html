@@ -1,0 +1,26 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+<style>
+.cafe-stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin:8px 0 24px}
+.cafe-stat{background:var(--body-bg,#fff);border:1px solid var(--hairline-color,#ddd);border-radius:7px;padding:16px}
+.cafe-stat>span,.cafe-stat>small{display:block;color:var(--body-quiet-color,#666);font-size:12px}
+.cafe-stat>strong{display:block;font-size:26px;margin:6px 0}.cafe-stat>strong small{font-size:12px}
+.cafe-stat.is-orange{border-top:3px solid #e67b36}.cafe-popular{border:1px solid var(--hairline-color,#ddd);padding:16px;border-radius:7px;margin-bottom:24px}
+.cafe-popular h2{font-size:18px}.cafe-popular h2 small{font-size:12px;color:#777;font-weight:400}
+.cafe-popular ol{margin-bottom:0;padding-left:20px}.cafe-popular li{padding:6px 0}.cafe-popular li b{float:right}
+</style>
+<div id="content-main">
+ <div class="cafe-stat-grid">
+  <div class="cafe-stat"><span>Заказов сегодня</span><strong>{{ cafe_stats.orders_today }}</strong><small>Все статусы</small></div>
+  <div class="cafe-stat is-orange"><span>Новые заказы</span><strong>{{ cafe_stats.new_orders }}</strong><small>Ждут обработки</small></div>
+  <div class="cafe-stat"><span>Выполнено</span><strong>{{ cafe_stats.completed_orders }}</strong><small>За всё время</small></div>
+  <div class="cafe-stat"><span>Выручка сегодня</span><strong>{{ cafe_stats.revenue_today }} <small>сомони</small></strong><small>По выполненным заказам</small></div>
+  <div class="cafe-stat"><span>Выручка за месяц</span><strong>{{ cafe_stats.revenue_month }} <small>сомони</small></strong><small>С начала месяца</small></div>
+ </div>
+ <section class="cafe-popular"><h2>Популярные блюда <small>за последние 30 дней</small></h2>
+  {% if cafe_stats.popular_dishes %}<ol>{% for dish in cafe_stats.popular_dishes %}<li><span>{{ dish.product_name }}</span><b>{{ dish.sold }} шт.</b></li>{% endfor %}</ol>
+  {% else %}<p>Статистика появится после первых выполненных заказов.</p>{% endif %}
+ </section>
+ {% include "admin/app_list.html" with app_list=app_list show_changelinks=True %}
+</div>
+{% endblock %}

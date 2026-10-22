@@ -1,0 +1,45 @@
+{% load static %}<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#38231c">
+  <title>{% block title %}Моё Кафе — вкусно и по-домашнему{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="{% static 'css/site.css' %}" rel="stylesheet">
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="{% url 'home' %}" aria-label="Моё Кафе — главная">
+      <span class="brand-mark"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M10 19h25v5a12.5 12.5 0 0 1-25 0v-5Zm25 2h3a5 5 0 0 1 0 10h-5"/><path d="M8 39h31M17 11c-2-3 3-4 1-7m9 7c-2-3 3-4 1-7"/></svg></span>
+      <span class="brand-name">Моё <b>Кафе</b><small>вкусно и по-домашнему</small></span>
+    </a>
+    <button class="nav-toggle" type="button" aria-label="Открыть меню" aria-expanded="false">☰</button>
+    <nav class="main-nav" aria-label="Основная навигация">
+      <a href="{% url 'home' %}">Главная</a><a href="{% url 'menu' %}">Меню</a><a href="{% url 'about' %}">О кафе</a><a href="{% url 'delivery' %}">Доставка</a><a href="{% url 'contacts' %}">Контакты</a>
+    </nav>
+    <a class="header-cart" href="{% url 'cart' %}"><span aria-hidden="true">🛒</span> Корзина <i>{{ cart_count }}</i></a>
+  </div>
+</header>
+<main>
+  {% if messages %}<div class="container messages">{% for message in messages %}<div class="notice notice-{{ message.tags }}">{{ message }}</div>{% endfor %}</div>{% endif %}
+  {% block content %}{% endblock %}
+</main>
+<footer class="site-footer">
+ <div class="container footer-grid">
+  <div><a class="brand footer-brand" href="{% url 'home' %}"><span class="brand-mark">☕</span><span class="brand-name">Моё <b>Кафе</b><small>вкусно и по-домашнему</small></span></a><p>Любимые блюда — всегда рядом.</p></div>
+  <div><h3>Навигация</h3><a href="{% url 'menu' %}">Меню</a><a href="{% url 'about' %}">О кафе</a><a href="{% url 'delivery' %}">Доставка</a></div>
+  <div><h3>Мы на связи</h3><a href="tel:+992900000000">+992 900 00 00 00</a><span>Душанбе, проспект Рудаки, 80</span><span>Ежедневно · 10:00–23:00</span></div>
+  <div class="footer-order"><span class="eyebrow">Уже сделали заказ?</span><a href="{% url 'order_lookup' %}">Проверить статус ↗</a></div>
+ </div>
+ <div class="container footer-bottom"><span>© {% now "Y" %} Моё Кафе</span><span>Приготовлено с заботой в Душанбе</span></div>
+</footer>
+<script src="{% static 'js/site.js' %}" defer></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

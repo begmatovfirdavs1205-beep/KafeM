@@ -1,0 +1,3 @@
+{% extends 'base.html' %}
+{% block title %}{{ title }} — Моё Кафе{% endblock %}
+{% block content %}<section class="page-hero"><div class="container"><span class="eyebrow">{{ eyebrow }}</span><h1>{{ heading }}</h1><p>{{ body }}</p><a class="button button-orange" href="{% url 'menu' %}">Перейти к меню <span>↗</span></a></div></section><section class="info-photo"><div class="container"><div class="info-photo-inner"><span>С любовью к хорошей еде</span></div></div></section>{% endblock %}

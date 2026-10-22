@@ -1,0 +1,27 @@
+body.theme-sandstone .main-header.navbar,
+body.theme-sandstone .main-sidebar,
+body.theme-sandstone .brand-link {
+  background-color: #38231c;
+}
+
+body.theme-sandstone .brand-link {
+  border-bottom: 1px solid #594238;
+}
+
+body.theme-sandstone .sidebar-dark-primary .nav-sidebar > .nav-item > .nav-link.active,
+body.theme-sandstone .btn-primary,
+body.theme-sandstone .page-item.active .page-link {
+  background-color: #e67b36;
+  border-color: #e67b36;
+  color: #fff;
+}
+
+body.theme-sandstone .content-wrapper {
+  background-color: #fbf7f0;
+}
+
+body.theme-sandstone .card,
+body.theme-sandstone .module {
+  border-color: #e9dfd2;
+  box-shadow: 0 3px 12px rgb(57 37 28 / 5%);
+}
